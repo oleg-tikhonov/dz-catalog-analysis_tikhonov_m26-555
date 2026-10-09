@@ -23,6 +23,7 @@ movies = [
      "rating": 7.3, "duration_min": 129, "actors": ["P. Diaz", "T. Chalamet"]},
 ]
 
+#Этап 1
 def average_rating(movies):
     total_rating = sum(movie["rating"] for movie in movies)
     return round(total_rating / len(movies), 1) 
@@ -38,3 +39,23 @@ def duration_in_hours(minutes):
     hours = minutes // 60
     leftover_minutes = minutes % 60 
     return f"{hours}ч {leftover_minutes}м"
+
+#Этап 2
+
+def rating_tier(rating):
+    if rating >= 9:
+        return "шедевр"
+    elif rating >= 7:
+        return "хорошо"
+    else:
+        return "средне" if rating >= 5 else "cлабо"
+
+def decade_label(year):
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if 2015 <= year <= 2020:
+            return "недавние"
+        case _ if year < 2015:
+            return "старые"
+        
