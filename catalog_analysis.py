@@ -146,3 +146,23 @@ high_rated_movies = {
 #Проверка примером
 print("\nПроверка 6 этапа")
 print(count_by_genre(movies))
+
+#Этап 7
+
+def all_genres(movies):
+    unique_genres = set()
+    for movie in movies:
+        unique_genres.update(movie["genres"])
+    return unique_genres
+
+def common_actors(movie1, movie2):
+    return set(movie1["actors"]) & set(movie2["actors"])
+
+def genres_only_in_one(movies_a, movies_b):
+    return all_genres(movies_a) - all_genres(movies_b)
+
+#Проверка примером
+print("\nПроверка 7 этапа")
+print(common_actors(movies[0], movies[3]))
+print(genres_only_in_one(movies[5:6], movies[:5]))
+
