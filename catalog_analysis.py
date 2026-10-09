@@ -166,3 +166,36 @@ print("\nПроверка 7 этапа")
 print(common_actors(movies[0], movies[3]))
 print(genres_only_in_one(movies[5:6], movies[:5]))
 
+#Этап 8
+def iter_high_rated(movies, min_rating=8.0):
+    for movie in movies:
+        if movie["rating"] > min_rating:
+            yield movie
+
+#Демонстрация генератора циклом for c выводом 
+print("\nВысокооцененные фильмы:")
+for movie in iter_high_rated(movies):
+    print(format_report_line(movie))
+
+#Генераторное выражение внутри sum()
+total_duration = sum(m["duration_min"] for m in movies if m["rating"] > 7)
+
+#Этап 9 - ОТЧЁТ ПО КАТАЛОГУ
+
+def build_report(movies):
+    print("ОТЧЁТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies)}")
+    print(f"Средний возраст фильмов: {catalog_age_stats(movies)[2]} лет\n")
+    print("Топ-3 фильма:")
+    top_3_movies = sorted(movies, key=lambda x: x["rating"], reverse=True)[:3]
+    for movie in top_3_movies:
+        print(f"{format_report_line(movie)}")
+    print("\nФильмов по жанрам:")
+    genre_counts = count_by_genre(movies)
+    sorted_genres = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)
+    for genre, count in sorted_genres:
+        print(f"{genre} - {count}")
+    all_unique = sorted(all_genres(movies))
+    print("\nВсе жанры каталога:", ", ".join(all_unique))
+    
+    
