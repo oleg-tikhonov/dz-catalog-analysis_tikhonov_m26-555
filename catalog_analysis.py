@@ -197,5 +197,7 @@ def build_report(movies):
         print(f"{genre} - {count}")
     all_unique = sorted(all_genres(movies))
     print("\nВсе жанры каталога:", ", ".join(all_unique))
-    
+
+build_report(movies)
+
     
