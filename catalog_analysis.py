@@ -119,3 +119,30 @@ def top_n_by_rating(movies, n=3):
 #Проверка примером 
 print("\nПроверка 5 этапа")
 print(top_n_by_rating(movies, 3))
+
+#Этап 6
+
+def count_by_genre(movies):
+    genre_count = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            genre_count[genre] = genre_count.get(genre, 0) + 1
+    return genre_count
+
+def actor_filmography(movies):
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            filmography[actor] = filmography.get(actor, []) + [movie["title"]]
+    return filmography
+
+avg_rating = average_rating(movies)
+high_rated_movies = {
+    movie["title"]: movie["rating"]
+    for movie in movies
+    if movie["rating"] > avg_rating
+}
+
+#Проверка примером
+print("\nПроверка 6 этапа")
+print(count_by_genre(movies))
