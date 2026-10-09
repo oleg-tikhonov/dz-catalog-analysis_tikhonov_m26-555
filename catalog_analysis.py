@@ -98,7 +98,7 @@ def format_report_line(movie):
     title = normalize_title(movie["title"])
     duration = duration_in_hours(movie["duration_min"])
     genres_sorted = ", ".join(sorted(movie["genres"]))
-    return f'"{title}" ({movie["year"]}) — {movie["rating"]}/10, {duration}, жанры: {genres_sorted}'
+    return f'"{title}" ({movie["year"]}) — {movie["rating"]}/10, {duration}, жанры: {genres_sorted}' # noqa: E501
 
 #Проверка примером
 print("\nПроверка 4 этапа")
@@ -106,3 +106,16 @@ print(normalize_title("silent hours"))
 print(make_slug("Silent Hours"))
 print(format_report_line(movies[7]))
 
+#Этап 5
+
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(movies, key=lambda x: x["rating"], reverse=True)
+    return [movie["title"] for movie in sorted_movies]
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(movies, key=lambda x: x["rating"], reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
+
+#Проверка примером 
+print("\nПроверка 5 этапа")
+print(top_n_by_rating(movies, 3))
