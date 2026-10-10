@@ -24,6 +24,7 @@ movies = [
 ]
 
 #Этап 1
+
 def average_rating(movies):
     total_rating = sum(movie["rating"] for movie in movies)
     return round(total_rating / len(movies), 1) 
@@ -183,7 +184,7 @@ total_duration = sum(m["duration_min"] for m in movies if m["rating"] > 7)
 #Этап 9 - ОТЧЁТ ПО КАТАЛОГУ
 
 def build_report(movies):
-    print("ОТЧЁТ ПО КАТАЛОГУ")
+    print("\nОТЧЁТ ПО КАТАЛОГУ")
     print(f"Средний рейтинг: {average_rating(movies)}")
     print(f"Средний возраст фильмов: {catalog_age_stats(movies)[2]} лет\n")
     print("Топ-3 фильма:")
