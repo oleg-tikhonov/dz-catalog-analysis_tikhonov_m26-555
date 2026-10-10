@@ -199,6 +199,7 @@ def build_report(movies):
     all_unique = sorted(all_genres(movies))
     print("\nВсе жанры каталога:", ", ".join(all_unique))
 
-build_report(movies)
+if __name__ == "__main__":
+    build_report(movies)
 
     
