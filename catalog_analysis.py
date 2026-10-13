@@ -60,23 +60,7 @@ def decade_label(year):
         case _ if year < 2015:
             return "старые"
 
- #Этап 3
-
-print("Фильмы (не комедии):")
-for movie in movies:
-    if "comedy" in movie["genres"]:
-        continue
-    print(movie["title"])
-
-print("\nПоиск шедевра")
-i = 0
-while i < len(movies):
-    if movies[i]["rating"] > 9:
-        print(f"Найден шедевр: {movies[i]['title']}")
-        break
-    i += 1
-else:
-    print("Шедевров не найдено")
+#Этап 3 (функция)
 
 def count_long_movies(movies, threshold=120):
     count = 0
@@ -101,12 +85,6 @@ def format_report_line(movie):
     genres_sorted = ", ".join(sorted(movie["genres"]))
     return f'"{title}" ({movie["year"]}) — {movie["rating"]}/10, {duration}, жанры: {genres_sorted}' # noqa: E501
 
-#Проверка примером
-print("\nПроверка 4 этапа")
-print(normalize_title("silent hours"))
-print(make_slug("Silent Hours"))
-print(format_report_line(movies[7]))
-
 #Этап 5
 
 def titles_sorted_by_rating(movies):
@@ -116,10 +94,6 @@ def titles_sorted_by_rating(movies):
 def top_n_by_rating(movies, n=3):
     sorted_movies = sorted(movies, key=lambda x: x["rating"], reverse=True)
     return [(movie["title"], movie["rating"]) for movie in sorted_movies[:n]]
-
-#Проверка примером 
-print("\nПроверка 5 этапа")
-print(top_n_by_rating(movies, 3))
 
 #Этап 6
 
@@ -144,10 +118,6 @@ high_rated_movies = {
     if movie["rating"] > avg_rating
 }
 
-#Проверка примером
-print("\nПроверка 6 этапа")
-print(count_by_genre(movies))
-
 #Этап 7
 
 def all_genres(movies):
@@ -162,21 +132,12 @@ def common_actors(movie1, movie2):
 def genres_only_in_one(movies_a, movies_b):
     return all_genres(movies_a) - all_genres(movies_b)
 
-#Проверка примером
-print("\nПроверка 7 этапа")
-print(common_actors(movies[0], movies[3]))
-print(genres_only_in_one(movies[5:6], movies[:5]))
-
 #Этап 8
+
 def iter_high_rated(movies, min_rating=8.0):
     for movie in movies:
-        if movie["rating"] > min_rating:
+        if movie["rating"] >= min_rating:
             yield movie
-
-#Демонстрация генератора циклом for c выводом 
-print("\nВысокооцененные фильмы:")
-for movie in iter_high_rated(movies):
-    print(format_report_line(movie))
 
 #Генераторное выражение внутри sum()
 total_duration = sum(m["duration_min"] for m in movies if m["rating"] > 7)
@@ -187,19 +148,49 @@ def build_report(movies):
     print("\nОТЧЁТ ПО КАТАЛОГУ")
     print(f"Средний рейтинг: {average_rating(movies)}")
     print(f"Средний возраст фильмов: {catalog_age_stats(movies)[2]} лет\n")
+    
     print("Топ-3 фильма:")
     top_3_movies = sorted(movies, key=lambda x: x["rating"], reverse=True)[:3]
     for movie in top_3_movies:
-        print(f"{format_report_line(movie)}")
+        print(f"  {format_report_line(movie)}")
+    
     print("\nФильмов по жанрам:")
     genre_counts = count_by_genre(movies)
-    sorted_genres = sorted(genre_counts.items(), key=lambda x: x[1], reverse=True)
+    sorted_genres = sorted(genre_counts.items(), key=lambda x: (-x[1], x[0]))
     for genre, count in sorted_genres:
-        print(f"{genre} - {count}")
+        print(f"  {genre} — {count}")
+    
     all_unique = sorted(all_genres(movies))
     print("\nВсе жанры каталога:", ", ".join(all_unique))
 
 if __name__ == "__main__":
+    
+    #Циклы из этапа 3
+    
+    print("Фильмы (не комедии):")
+    for movie in movies:
+        if "comedy" in movie["genres"]:
+            continue
+        print(movie["title"])
+
+    print("\nПоиск шедевра")
+    i = 0
+    while i < len(movies):
+        if movies[i]["rating"] > 9:
+            print(f"Найден шедевр: {movies[i]['title']}")
+            break
+        i += 1
+    else:
+        print("Шедевров не найдено")
+
+     #Функция-генератор из этапа 8
+
+    print("\nВысокооцененные фильмы:")
+    for movie in iter_high_rated(movies):
+        print(format_report_line(movie))
+
+     #Вызов отчёта
+
     build_report(movies)
 
     
